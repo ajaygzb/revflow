@@ -1,0 +1,16 @@
+12:35:56,981 DEBUG devpinoyLogger:62 - Config file loaded !!!
+12:35:56,983 DEBUG devpinoyLogger:77 - OR file loaded !!!
+12:36:00,775 DEBUG devpinoyLogger:108 - Chrome Launched !!!
+12:36:01,539 DEBUG devpinoyLogger:122 - Navigated to : http://10.131.168.19:3030
+12:36:02,138 DEBUG devpinoyLogger:39 - Login successfully executed
+12:36:02,156 DEBUG cache:45 - Couldn't find template in cache for "Extent.ftl"("en_US", UTF-8, parsed); will try to load it.
+12:36:02,157 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent_en_US.ftl"): Not found
+12:36:02,158 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent_en.ftl"): Not found
+12:36:02,158 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent.ftl"): Found
+12:36:02,158 DEBUG cache:45 - Loading template for "Extent.ftl"("en_US", UTF-8, parsed) from "jar:file:/C:/Users/ajay.kumar4/.m2/repository/com/relevantcodes/extentreports/2.41.2/extentreports-2.41.2.jar!/com/relevantcodes/extentreports/view/Extent.ftl"
+12:36:03,441 DEBUG cache:45 - Couldn't find template in cache for "Extent.ftl"("en_US", UTF-8, parsed); will try to load it.
+12:36:03,441 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent_en_US.ftl"): Not found
+12:36:03,441 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent_en.ftl"): Not found
+12:36:03,442 DEBUG cache:45 - TemplateLoader.findTemplateSource("Extent.ftl"): Found
+12:36:03,442 DEBUG cache:45 - Loading template for "Extent.ftl"("en_US", UTF-8, parsed) from "jar:file:/C:/Users/ajay.kumar4/.m2/repository/com/relevantcodes/extentreports/2.41.2/extentreports-2.41.2.jar!/com/relevantcodes/extentreports/view/Extent.ftl"
+12:36:04,200 DEBUG devpinoyLogger:146 - test execution completed !!!

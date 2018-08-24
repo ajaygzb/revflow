@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RevFlow R6 Login Test"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="1.691">
+  <properties />
+  
+  
+            <testcase name="LoginTest" time="0.570" classname="com.revflow.testcase.TestCase001" />
+                <testcase name="LogOutTest" time="1.121" classname="com.revflow.testcase.TestCase001" />
+      
+</testsuite>
