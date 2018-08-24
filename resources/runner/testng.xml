@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Data Driven Basics">
+<suite name="Data Driven Basics" parallel="none" >
     
     <listeners>
       <listener class-name="org.uncommons.reportng.HTMLReporter"/>
@@ -9,10 +9,59 @@
   </listeners>
     
     
-	<test name="RevFlow R6 Login Test">
+	<!-- <test name="RevFlow R6 Login Test">
 		<classes>
 			<class name="com.revflow.testcase.TestCase001" />
 		</classes>
-	</test> <!-- Test -->
+	</test> Test -->
+	
+	<test name="FirefoxTest">
+ 
+ <parameter name="browser" value="firefox" />
+ 
+ <classes>
+ 
+ <class name="com.revflow.testcase.TestCase001" />
+ 
+ </classes>
+ 
+ </test>
+ 
+ <test name="ChromeTest">
+ 
+ <parameter name="browser" value="chrome" />
+ 
+ <classes>
+ 
+ <class name="com.revflow.testcase.TestCase001" />
+ 
+ </classes>
+ 
+ </test>
+ 
+ 	<test name="IETest">
+ 
+ <parameter name="browser" value="IE" />
+ 
+ <classes>
+ 
+ <class name="com.revflow.testcase.TestCase001" />
+ 
+ </classes>
+ 
+ </test>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </suite> <!-- Suite -->

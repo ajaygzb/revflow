@@ -1,14 +1,19 @@
 package com.revflow.base;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,9 +23,12 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -40,10 +48,13 @@ public class BasePage {
 	public static Properties OR = new Properties();	
 	public static ExtentTest test;
 	public ExtentReports rep = ExtentManager.getInstance();
-    public static WebDriver driver;
+    private  WebDriver driver;
     public static ExcelReader excel = new ExcelReader(
 	System.getProperty("user.dir") + "\\resources\\excel\\testdata.xlsx");
 	public static WebDriverWait wait;
+	public static String screenshotPath;
+	public static String screenshotName;
+	public static String browsername;
      
     @BeforeSuite
 	public void setUp() {
@@ -122,17 +133,32 @@ public void browserLaunch(String browser,String url){
 	 log.debug("Navigated to : " + url);
 	 driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),TimeUnit.SECONDS);
 	 wait = new WebDriverWait(driver, 5);
+	 setDriver(driver);
+	 getDriver();
 	 
 	 
  }
  
  
  
- 
+ @Parameters("browser")
  @BeforeTest
- public void beforeTest() {
- 
-	  browserLaunch(config.getProperty("browser"),config.getProperty("url"));
+ public void beforeTest(String browser) {
+	 if(browser != null && !browser.isEmpty()){
+    	  
+    	  browserLaunch(browser,config.getProperty("url")); 
+    	  browsername=browser;
+    	  
+    	  
+      }else{
+    	  
+    	  browserLaunch(config.getProperty("browser"),config.getProperty("url"));   
+      }
+	 
+	 
+	  
+	 
+	
  }
  
 
@@ -145,6 +171,17 @@ public void browserLaunch(String browser,String url){
 
 		log.debug("test execution completed !!!");
 	}
+    
+    @AfterTest
+  	public void Closedriver() {
+
+  		if (driver != null) {
+  			driver.close();
+  		}
+
+  		log.debug("browser closed called !!!");
+  		//System.out.println("browser closed called !!!");
+  	}
  
 	
 
@@ -153,7 +190,7 @@ public void browserLaunch(String browser,String url){
     
     
     
-	public static void verifyEquals(String expected, String actual) throws IOException {
+	public  void verifyEquals(String expected, String actual) throws IOException {
 
 		try {
 
@@ -161,16 +198,16 @@ public void browserLaunch(String browser,String url){
 
 		} catch (Throwable t) {
 
-			TestUtil.captureScreenshot();
+			captureScreenshot();
 			// ReportNG
 			Reporter.log("<br>" + "Verification failure : " + t.getMessage() + "<br>");
-			Reporter.log("<a target=\"_blank\" href=" + TestUtil.screenshotName + "><img src=" + TestUtil.screenshotName
+			Reporter.log("<a target=\"_blank\" href=" + screenshotName + "><img src=" + TestUtil.screenshotName
 					+ " height=200 width=200></img></a>");
 			Reporter.log("<br>");
 			Reporter.log("<br>");
 			// Extent Reports
 			test.log(LogStatus.ERROR, " Verification failed with exception : " + t.getMessage());
-			test.log(LogStatus.INFO, test.addScreenCapture(TestUtil.screenshotName));
+			test.log(LogStatus.INFO, test.addScreenCapture(screenshotName));
             Assert.assertFalse(true,t.getMessage());
 		}
 
@@ -238,6 +275,30 @@ public void browserLaunch(String browser,String url){
 		driver.findElement(By.xpath(locator)).click();
 		test.log(LogStatus.INFO, "Clicking on : " + locator);
 	}
+
+
+
+	public WebDriver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+	
+	public   void captureScreenshot() throws IOException {
+
+		File scrFile = ((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
+
+		Date d = new Date();
+		screenshotName = d.toString().replace(":", "_").replace(" ", "_") + ".jpg";
+
+		FileUtils.copyFile(scrFile,
+				new File(System.getProperty("user.dir") + "\\target\\surefire-reports\\html\\" + screenshotName));
+
+	}
+
+	
 
 
 

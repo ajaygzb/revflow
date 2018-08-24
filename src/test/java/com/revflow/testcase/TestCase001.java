@@ -30,7 +30,7 @@ if(!data.get("runmode").equals("Y")){
 		}		
  map.put("USERNAME",data.get("username"));
  map.put("PASSWORD",data.get("password"));
- lp = new Login(driver,map);
+ lp = new Login(getDriver(),map);
  lp.verifyPageLoaded();
  lp.verifyPageUrl();
  verifyEquals("Forgot password ?",lp.GetForgotPasswordLinkText());
@@ -44,7 +44,7 @@ log.debug("Login successfully executed");
 	@Test(priority=2,description = "LogOut from R6 Application")
 	public void LogOut_Test(){
 		
-		hp = new HomePage(driver);
+		hp = new HomePage(getDriver());
 		hp.clickAdminLink();
 		hp.clickArFollowupLink();
 		hp.clickBillingLink();

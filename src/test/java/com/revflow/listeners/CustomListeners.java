@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
@@ -22,6 +23,7 @@ import com.revflow.utilities.TestUtil;
 public class CustomListeners extends BasePage implements ITestListener,ISuiteListener {
 
 	public 	String messageBody;
+	WebDriver driver =null;
 	public void onFinish(ITestContext arg0) {
 		// TODO Auto-generated method stub
 		
@@ -42,19 +44,23 @@ public class CustomListeners extends BasePage implements ITestListener,ISuiteLis
 		System.setProperty("org.uncommons.reportng.escape-output","false");
 		try {
 			
-			TestUtil.captureScreenshot();
+			 Object currentClass = arg0.getInstance();
+			 driver = ((BasePage) currentClass).getDriver();
+			 setDriver(driver);
+			
+		captureScreenshot();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		test.log(LogStatus.FAIL, arg0.getName().toUpperCase()+" Failed with exception : "+arg0.getThrowable());
-		test.log(LogStatus.INFO, test.addScreenCapture(TestUtil.screenshotName));
+		test.log(LogStatus.INFO, test.addScreenCapture(screenshotName));
 		
 		Reporter.log("Click to see Screenshot");
-		Reporter.log("<a target=\"_blank\" href="+TestUtil.screenshotName+">Screenshot</a>");
+		Reporter.log("<a target=\"_blank\" href="+screenshotName+">Screenshot</a>");
 		Reporter.log("<br>");
 		Reporter.log("<br>");
-		Reporter.log("<a target=\"_blank\" href="+TestUtil.screenshotName+"><img src="+TestUtil.screenshotName+" height=200 width=200></img></a>");
+		Reporter.log("<a target=\"_blank\" href="+screenshotName+"><img src="+screenshotName+" height=200 width=200></img></a>");
 		rep.endTest(test);
 		rep.flush();
 		
@@ -73,6 +79,7 @@ public class CustomListeners extends BasePage implements ITestListener,ISuiteLis
 	public void onTestStart(ITestResult arg0) {
 
 		test = rep.startTest(arg0.getName().toUpperCase());
+		test.assignCategory(browsername);
 		//arg0.getName().toUpperCase()+":"+arg0.getMethod().getDescription()
 	}
 
