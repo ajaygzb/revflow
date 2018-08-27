@@ -173,8 +173,8 @@ public void browserLaunch(String browser,String url){
 	 if(System.getProperty("browser")!=null && !System.getProperty("browser").isEmpty()){
 		 
 		 System.out.println("Launching browser as per Jenkins ENV.");
-		 browserLaunch(browser,config.getProperty("url")); 
-   	     browsername=browser;
+		 browserLaunch(System.getProperty("browser"),config.getProperty("url")); 
+   	     browsername=System.getProperty("browser");
 		 
 		 
 	 }else if(browser != null && !browser.isEmpty()){
