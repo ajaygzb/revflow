@@ -3,12 +3,14 @@ import java.util.Map;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class HomePage {
+	
     private Map<String, String> data;
     private WebDriver driver;
     private int timeout = 15;
@@ -69,7 +71,7 @@ public class HomePage {
     public HomePage(WebDriver driver) {
         this();
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
     }
 
     public HomePage(WebDriver driver, Map<String, String> data) {

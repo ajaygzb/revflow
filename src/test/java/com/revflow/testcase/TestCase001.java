@@ -34,6 +34,7 @@ if(!data.get("runmode").equals("Y")){
  lp.verifyPageLoaded();
  lp.verifyPageUrl();
  verifyEquals("Forgot password ?",lp.GetForgotPasswordLinkText());
+ lp.clickForgotPasswordLink();
  lp.fillAndSubmit();
 // Assert.assertTrue(isElementPresent(By.cssSelector(OR.getProperty("addCustBtn_CSS"))),"Login not successful");
 log.debug("Login successfully executed");

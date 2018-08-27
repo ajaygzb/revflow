@@ -3,6 +3,7 @@ import java.util.Map;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
@@ -41,7 +42,7 @@ public class Login {
     public Login(WebDriver driver) {
         this();
         this.driver = driver;
-        PageFactory.initElements(driver,this);	
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 15), this);
         
         
     }
@@ -64,6 +65,7 @@ public class Login {
      */
     public Login clickForgotPasswordLink() {
         forgotPassword.click();
+        driver.navigate().back();
         return this;
     }
     
@@ -79,6 +81,7 @@ public class Login {
      */
     public Login clickSignInButton() {
         signIn.click();
+        System.out.println(String.valueOf(signIn));
         return this;
     }
 

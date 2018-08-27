@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -23,7 +21,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
@@ -131,8 +128,8 @@ public void browserLaunch(String browser,String url){
 	 
 	 driver.get(url);
 	 log.debug("Navigated to : " + url);
-	 driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),TimeUnit.SECONDS);
-	 wait = new WebDriverWait(driver, 5);
+	// driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),TimeUnit.SECONDS);
+	 //wait = new WebDriverWait(driver, 5);
 	 setDriver(driver);
 	 getDriver();
 	 
@@ -166,7 +163,11 @@ public void browserLaunch(String browser,String url){
 	public void tearDown() {
 
 		if (driver != null) {
-			driver.quit();
+			try{driver.quit();
+			}
+			catch(Exception e){
+				
+			}
 		}
 
 		log.debug("test execution completed !!!");
