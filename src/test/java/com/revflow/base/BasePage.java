@@ -57,6 +57,7 @@ public class BasePage {
 	public static String screenshotPath;
 	public static String screenshotName;
 	public static String browsername;
+	public static String Jbrowser = System.getProperty("browser");
 	
 	//Saucelab env.
 	
@@ -169,14 +170,14 @@ public void browserLaunch(String browser,String url){
  @Parameters("browser")
  @BeforeTest
  public void beforeTest(String browser) {
-         
-          System.out.println("systembrowser****************"+System.getProperty("browser"));
 	 
-	 if(System.getProperty("browser")!=null){
+	 System.out.println("systembrowser****************"+Jbrowser);
+	 
+	 if(Jbrowser!=null){
 		 
 		 System.out.println("Launching browser as per Jenkins ENV.");
-		 browserLaunch(System.getProperty("browser"),config.getProperty("url")); 
-   	     browsername=System.getProperty("browser");
+		 browserLaunch(Jbrowser,config.getProperty("url")); 
+   	     browsername=Jbrowser;
 		 
 		 
 	 }else if(browser != null && !browser.isEmpty()){
