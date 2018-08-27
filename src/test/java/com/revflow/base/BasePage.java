@@ -17,6 +17,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -33,6 +35,9 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.revflow.utilities.ExcelReader;
 import com.revflow.utilities.ExtentManager;
 import com.revflow.utilities.TestUtil;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class BasePage {
 
@@ -52,6 +57,18 @@ public class BasePage {
 	public static String screenshotPath;
 	public static String screenshotName;
 	public static String browsername;
+	
+	//Saucelab env.
+	
+	public static final String USERNAME = "ajaygzb18";
+	public static final String ACCESS_KEY = "08c76b17-4bca-4d68-bea6-8bcddf2c7d0a";
+	public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+	
+	
+	
+	
+	
+	
      
     @BeforeSuite
 	public void setUp() {
@@ -103,7 +120,6 @@ public void browserLaunch(String browser,String url){
 		
 		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\resources\\executables\\geckodriver.exe");
 		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
 		log.debug("Firefox Launched !!!");
 		
 		
@@ -112,7 +128,6 @@ public void browserLaunch(String browser,String url){
 		System.setProperty("webdriver.chrome.driver",
 		System.getProperty("user.dir") + "\\resources\\executables\\chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.manage().window().maximize();
 		log.debug("Chrome Launched !!!");
 		
 	}else if(browser.equalsIgnoreCase("IE")){
@@ -120,12 +135,25 @@ public void browserLaunch(String browser,String url){
 		System.setProperty("webdriver.ie.driver",
 	    System.getProperty("user.dir") + "\\resources\\executables\\IEDriverServer.exe");
 		driver = new InternetExplorerDriver();
-		driver.manage().window().maximize();
 		log.debug("IE Launched !!!");
 		
 		
-	}
+	}else if(browser.equalsIgnoreCase("cloud")){
+		
+
+	    DesiredCapabilities caps = DesiredCapabilities.chrome();
+	    caps.setCapability("platform", "Windows 10");
+	    caps.setCapability("version", "latest");
 	 
+	    try {
+		  driver = new RemoteWebDriver(new URL(URL), caps);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.debug("IE Launched !!!");
+	}
+	 driver.manage().window().maximize();
 	 driver.get(url);
 	 log.debug("Navigated to : " + url);
 	// driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")),TimeUnit.SECONDS);

@@ -9,11 +9,6 @@
   </listeners>
     
     
-	<!-- <test name="RevFlow R6 Login Test">
-		<classes>
-			<class name="com.revflow.testcase.TestCase001" />
-		</classes>
-	</test> Test -->
 	
 	<test name="FirefoxTest">
  
@@ -50,6 +45,18 @@
  </classes>
  
  </test>
+ 
+<!--  	<test name="SauceLab">
+ 
+ <parameter name="browser" value="cloud" />
+ 
+ <classes>
+ 
+ <class name="com.revflow.testcase.TestCase001" />
+ 
+ </classes>
+ 
+ </test> -->
 	
 	
 	

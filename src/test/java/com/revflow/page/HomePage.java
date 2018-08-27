@@ -35,7 +35,7 @@ public class HomePage {
     @CacheLookup
     private WebElement denialMgmt;
 
-    @FindBy(css = "a[href='javascript:void(0)']")
+    @FindBy(xpath = "//div[@class='tranparentSpace']")
     @CacheLookup
     private WebElement logowebpt;
 
