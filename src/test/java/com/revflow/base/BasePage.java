@@ -169,7 +169,15 @@ public void browserLaunch(String browser,String url){
  @Parameters("browser")
  @BeforeTest
  public void beforeTest(String browser) {
-	 if(browser != null && !browser.isEmpty()){
+	 
+	 if(System.getProperty(browser)!=null && !browser.isEmpty()){
+		 
+		 System.out.println("Launching browser as per Jenkins ENV.");
+		 browserLaunch(browser,config.getProperty("url")); 
+   	     browsername=browser;
+		 
+		 
+	 }else if(browser != null && !browser.isEmpty()){
     	  
     	  browserLaunch(browser,config.getProperty("url")); 
     	  browsername=browser;
@@ -178,6 +186,7 @@ public void browserLaunch(String browser,String url){
       }else{
     	  
     	  browserLaunch(config.getProperty("browser"),config.getProperty("url"));   
+    	  browsername=browser;
       }
 	 
 	 
