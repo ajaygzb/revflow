@@ -15,6 +15,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -35,6 +36,8 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.revflow.utilities.ExcelReader;
 import com.revflow.utilities.ExtentManager;
 import com.revflow.utilities.TestUtil;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -119,22 +122,20 @@ public void browserLaunch(String browser,String url){
 	 
 	if(browser.equalsIgnoreCase("firefox")) {
 		
-		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\resources\\executables\\geckodriver.exe");
+		WebDriverManager.firefoxdriver().setup();
 		driver = new FirefoxDriver();
 		log.debug("Firefox Launched !!!");
 		
 		
 	}else if(browser.equalsIgnoreCase("chrome")){
-		
-		System.setProperty("webdriver.chrome.driver",
-		System.getProperty("user.dir") + "\\resources\\executables\\chromedriver.exe");
+
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		log.debug("Chrome Launched !!!");
 		
 	}else if(browser.equalsIgnoreCase("IE")){
-		
-		System.setProperty("webdriver.ie.driver",
-	    System.getProperty("user.dir") + "\\resources\\executables\\IEDriverServer.exe");
+
+		WebDriverManager.iedriver().setup();
 		driver = new InternetExplorerDriver();
 		log.debug("IE Launched !!!");
 		
@@ -171,23 +172,17 @@ public void browserLaunch(String browser,String url){
  @BeforeTest
  public void beforeTest(String browser) {
 	 
-	 System.out.println("systembrowser****************"+Jbrowser);
 	 
-	 if(Jbrowser!=null){
-		 
-		 System.out.println("Launching browser as per Jenkins ENV.");
-		 browserLaunch(Jbrowser,config.getProperty("url")); 
-   	     browsername=Jbrowser;
-		 
-		 
-	 }else if(browser != null && !browser.isEmpty()){
-    	  
+	 
+          if(browser != null && !browser.isEmpty()){
+          System.out.println("Getting Browser name from TestNG XML:  "+browser);
     	  browserLaunch(browser,config.getProperty("url")); 
     	  browsername=browser;
     	  
     	  
       }else{
     	  
+    	  System.out.println("Getting Browser name from config.   "+browser);
     	  browserLaunch(config.getProperty("browser"),config.getProperty("url"));   
     	  browsername=browser;
       }
